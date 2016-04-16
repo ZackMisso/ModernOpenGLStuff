@@ -4,6 +4,10 @@
 #include <GLUT/glut.h>
 #include "views/viewController.h"
 
+// debug
+#include <iostream>
+using namespace std;
+
 // openGL methods
 void display();
 void reshape(int w,int h);
@@ -31,7 +35,9 @@ int main(int argc,char** argv) {
 }
 
 void display() {
+	cout << "HI" << endl;
 	viewController->getCurrentView()->display();
+	//glutSwapBuffers();
 }
 
 void reshape(int w,int h) {

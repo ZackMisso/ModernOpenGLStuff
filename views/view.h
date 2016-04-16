@@ -1,8 +1,7 @@
 #ifndef __VIEW_H__
 #define __VIEW_H__
 
-#include <OpenGL/gl.h>
- #include <OpenGL/glu.h>
+#include <OpenGL/gl3.h>
 #include <GLUT/glut.h>
 
 class View {

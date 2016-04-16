@@ -5,6 +5,7 @@
 
 class FirstView : public View {
 private:
+  GLfloat clearColor[4];
 public:
   FirstView();
   virtual void display();

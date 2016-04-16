@@ -1,19 +1,19 @@
 #include "firstView.h"
+#include <iostream>
+
+using namespace std;
 
 FirstView::FirstView() {
-
+  clearColor[0] = 1.0f;
+  clearColor[1] = 1.0f;
+  clearColor[2] = 1.0f;
+  clearColor[3] = 1.0f;
 }
 
 void FirstView::display() {
-  glClearColor(1.0,1.0,1.0,1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  cout << "HELLO" << endl;
+  glClearBufferfv(GL_COLOR,0,clearColor);
 	glColor3f(1.0,0.0,0.0);
-	glBegin(GL_TRIANGLES);
-	glVertex2f(-0.5,0.5);
-	glVertex2f(0.5,0.5);
-	glVertex2f(0.0,0.0);
-	glEnd();
-	glutSwapBuffers();
 }
 
 void FirstView::reshape(int w,int h) {

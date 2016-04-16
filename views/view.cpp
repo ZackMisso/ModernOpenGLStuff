@@ -1,8 +1,11 @@
 #include "view.h"
+#include <iostream>
+
+using namespace std;
 
 View::View() { }
 
-void View::display() { }
+void View::display() { cout << "WHAT" << endl; }
 
 void View::reshape(int w,int h) { }
 
