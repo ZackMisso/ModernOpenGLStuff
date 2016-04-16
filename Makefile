@@ -1,0 +1,28 @@
+CC=clang++
+#CC=g++
+CFLAGS+= -std=c++11 #-g -O0 -Wall -pedantic -I./ -I./include
+
+#STRINGFIX = -lXext -lX11
+#STRINGFIX = -lXext -lX11 #-L/usr/lib/nvidia-340-updates
+GLUT2 = -framework OpenGL -framework GLUT
+LIBS = $(GLUT2)
+
+PROD= Demo
+
+SRCS= $(shell ls *.cpp)
+SRCS+= $(shell ls views/*.cpp)
+
+OBJS= $(patsubst %.cpp, %.o, $(SRCS))
+
+all: $(PROD)
+
+$(OBJS): %.o: %.cpp
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $(INCLUDES) $< -o $@ #$(LIBGL) #$(LIBGLUT) $(LIBGL) $(LIBS)
+
+$(PROD): $(OBJS)
+	$(CC) -o $(PROD) $^ $(LIBS)
+
+clean:
+	rm -f $(PROD)
+	rm -f *.o
+	rm -f views/*.o
