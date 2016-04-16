@@ -1,5 +1,8 @@
 #include "viewController.h"
 #include "firstView.h"
+#include <iostream>
+
+using namespace std;
 
 ViewController* ViewController::instance = 0x0;
 
@@ -12,8 +15,10 @@ ViewController::~ViewController() {
 }
 
 void ViewController::initialize() {
+  cout << "Initializing View Controller" << endl;
   if(!instance)
     instance = new ViewController();
+  cout << "View Controller Initialized" << endl;
 }
 
 void ViewController::destroy() {

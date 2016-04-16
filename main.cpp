@@ -19,8 +19,10 @@ void mouseClick(int button,int state,int x,int y);
 ViewController* viewController;
 
 int main(int argc,char** argv) {
-	ViewController::initialize();
-	viewController = ViewController::getInstance();
+	//cout << "Starting" << endl;
+	//ViewController::initialize();
+	//viewController = ViewController::getInstance();
+	//cout << "Got View Controller" << endl;
   glutInit(&argc,argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(1000,1000);
@@ -30,6 +32,8 @@ int main(int argc,char** argv) {
 	glutKeyboardFunc(keyboard);
 	glutMouseFunc(mouseClick);
 	glutMotionFunc(mouseMove);
+	ViewController::initialize();
+	viewController = ViewController::getInstance();
   glutMainLoop();
   return 0;
 }

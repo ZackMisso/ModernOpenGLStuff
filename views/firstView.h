@@ -6,6 +6,7 @@
 class FirstView : public View {
 private:
   GLfloat clearColor[4];
+  GLuint compileShaders();
 public:
   FirstView();
   virtual void display();
