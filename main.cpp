@@ -1,7 +1,4 @@
 // This Project is all my messing around with Modern OpenGL
-//#include <OpenGL/gl.h>
-// #include <OpenGL/glu.h>
-//#include <GLUT/glut.h>
 #include <GLFW/glfw3.h>
 #include "views/viewController.h"
 
