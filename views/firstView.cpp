@@ -10,18 +10,17 @@ FirstView::FirstView() {
   clearColor[2] = 1.0f;
   clearColor[3] = 1.0f;
   cout << "FIRST VIEW" << endl;
-  glClearColor(clearColor[0],clearColor[1],clearColor[2],clearColor[3]);
+  //glClearColor(clearColor[0],clearColor[1],clearColor[2],clearColor[3]);
   cout << "FIRST VIEW" << endl;
 }
 
 void FirstView::display() {
   cout << "First View Display" << endl;
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   //glClearBufferfv(GL_COLOR,0,clearColor);
   //glClearBufferfv(GL_DEPTH,0,clearColor);
 	//glColor3f(1.0,0.0,0.0);
-  glutSwapBuffers();
 }
 
 GLuint FirstView::compileShaders() {

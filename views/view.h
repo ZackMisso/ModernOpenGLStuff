@@ -8,6 +8,7 @@ class View {
 private:
 public:
   View();
+  virtual ~View();
   virtual void display();
   virtual void reshape(int w,int h);
   virtual void keyboard(unsigned char key,int x,int y);

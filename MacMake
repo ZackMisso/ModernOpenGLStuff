@@ -4,7 +4,7 @@ CFLAGS+= -std=c++11 -Wall #-g -O0 -Wall -pedantic -I./ -I./include
 
 #STRINGFIX = -lXext -lX11
 #STRINGFIX = -lXext -lX11 #-L/usr/lib/nvidia-340-updates
-GLUT2 = -framework OpenGL -framework GLUT
+GLUT2 = -framework OpenGL -framework GLUT -framework IOKit -framework CoreVideo -lglfw3
 LIBS = $(GLUT2)
 
 PROD= Demo

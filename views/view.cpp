@@ -5,7 +5,9 @@ using namespace std;
 
 View::View() { }
 
-void View::display() { cout << "WHAT" << endl; }
+View::~View() { }
+
+void View::display() { }
 
 void View::reshape(int w,int h) { }
 
