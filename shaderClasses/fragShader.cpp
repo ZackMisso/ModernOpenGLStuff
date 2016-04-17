@@ -1,8 +1,12 @@
 #include "fragShader.h"
 
-FragShader::FragShader() {
-  // to be implemented
-}
+FragShader::FragShader(int len,const char* s)
+      : Shader(GL_FRAGMENT_SHADER,len,s)
+{ }
+
+FragShader::FragShader()
+      : Shader(GL_FRAGMENT_SHADER)
+{ }
 
 FragShader::~FragShader() {
   // to be implemented

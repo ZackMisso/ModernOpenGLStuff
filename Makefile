@@ -11,6 +11,7 @@ PROD= Demo
 
 SRCS= $(shell ls *.cpp)
 SRCS+= $(shell ls views/*.cpp)
+SRCS+= $(shell ls shaderClasses/*.cpp)
 
 OBJS= $(patsubst %.cpp, %.o, $(SRCS))
 
@@ -26,3 +27,4 @@ clean:
 	rm -f $(PROD)
 	rm -f *.o
 	rm -f views/*.o
+	rm -f shaderClasses/*.o
