@@ -8,6 +8,7 @@ ViewController* ViewController::instance = 0x0;
 
 ViewController::ViewController() {
   currentView = new FirstView();
+  currentView->initialize();
 }
 
 ViewController::~ViewController() {
@@ -28,6 +29,12 @@ void ViewController::destroy() {
 
 ViewController* ViewController::getInstance() {
   return instance;
+}
+
+void ViewController::switchToView(View* view) {
+  currentView->destroy();
+  delete currentView;
+  currentView = view;
 }
 
 View* ViewController::getCurrentView() { return currentView; }

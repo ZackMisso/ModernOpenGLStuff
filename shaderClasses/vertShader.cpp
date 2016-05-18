@@ -8,6 +8,4 @@ VertShader::VertShader()
   :Shader(GL_VERTEX_SHADER)
 { }
 
-VertShader::~VertShader() {
-  // to be implemented
-}
+VertShader::~VertShader() { }

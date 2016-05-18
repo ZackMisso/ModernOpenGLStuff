@@ -18,12 +18,6 @@ void error(int error, const char* description);
 ViewController* viewController;
 
 int main(int argc,char** argv) {
-	//cout << "Starting" << endl;
-	ViewController::initialize();
-  viewController = ViewController::getInstance();
-	//viewController = ViewController::getInstance();
-	//cout << "Got View Controller" << endl;
-
   if(!glfwInit())
     exit(EXIT_FAILURE);
   GLFWwindow* window = glfwCreateWindow(1000,1000,"Zack Misso - ModernGL",NULL,NULL);
@@ -40,6 +34,9 @@ int main(int argc,char** argv) {
   glViewport(0,0,width,height);
   glfwSwapInterval(1);
 
+	ViewController::initialize();
+  viewController = ViewController::getInstance();
+
   while (!glfwWindowShouldClose(window))
   {
     // Main Loop
@@ -53,11 +50,7 @@ int main(int argc,char** argv) {
 }
 
 void display() {
-	//cout << "HI" << endl;
-  glClearColor(0.0,0.0,0.0,1.0);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	viewController->getCurrentView()->display();
-	//glutSwapBuffers();
 }
 
 void reshape(int w,int h) {

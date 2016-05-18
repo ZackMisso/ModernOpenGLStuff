@@ -8,6 +8,4 @@ FragShader::FragShader()
       : Shader(GL_FRAGMENT_SHADER)
 { }
 
-FragShader::~FragShader() {
-  // to be implemented
-}
+FragShader::~FragShader() { }

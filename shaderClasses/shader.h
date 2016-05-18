@@ -20,6 +20,7 @@ public:
   void reset();
   void release();
   // getter methods
+  GLchar* getSource();
   GLuint getShaderObj();
 };
 

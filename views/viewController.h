@@ -10,6 +10,8 @@ private:
   ViewController();
 public:
   ~ViewController();
+  void switchToView(View* view);
+  // singleton methods
   static void initialize();
   static void destroy();
   static ViewController* getInstance();

@@ -97,6 +97,8 @@ void Shader::release() {
   shaderObj = 0;
 }
 
+GLchar* Shader::getSource() { return source; }
+
 GLuint Shader::getShaderObj() {
   validate();
   return shaderObj;

@@ -2,11 +2,16 @@
 #define __FIRSTVIEW_H__
 
 #include "view.h"
+#include "../shaderClasses/fragShader.h"
+#include "../shaderClasses/vertShader.h"
 
 class FirstView : public View {
 private:
+  FragShader* frag;
+  VertShader* vert;
   GLfloat clearColor[4];
-  GLuint compileShaders();
+  GLuint renderProgram;
+  GLuint vao;
 public:
   FirstView();
   virtual void display();
