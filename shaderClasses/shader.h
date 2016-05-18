@@ -1,7 +1,9 @@
 #ifndef __SHADER_H__
 #define __SHADER_H__
 
+#define  GLFW_INCLUDE_GL3
 #include <GLFW/glfw3.h>
+#include <OpenGL/gl3.h>
 
 class Shader {
 private:

@@ -1,7 +1,9 @@
 #ifndef __VIEW_H__
 #define __VIEW_H__
 
+#define  GLFW_INCLUDE_GL3
 #include <GLFW/glfw3.h>
+#include <OpenGL/gl3.h>
 
 class View {
 private:

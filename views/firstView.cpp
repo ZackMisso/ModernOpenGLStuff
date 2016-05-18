@@ -51,12 +51,12 @@ void FirstView::initialize() {
   // compile shaders
   renderProgram = compileShader(vert->getSource(),vert->getSource());
   // create and link empty vao
-  //glGenVertexArrays(1,&vao);
-  //glBindVertexArray(vao);
+  glGenVertexArrays(1,&vao);
+  glBindVertexArray(vao);
 }
 
 void FirstView::destroy() {
-  //glDeleteVertexArrays(1,&vao);
-  //glDeleteProgram(renderProgram);
-  //glDeleteVertexArrays(1,&vao);
+  glDeleteVertexArrays(1,&vao);
+  glDeleteProgram(renderProgram);
+  glDeleteVertexArrays(1,&vao);
 }

@@ -1,5 +1,7 @@
 // This Project is all my messing around with Modern OpenGL
+#define  GLFW_INCLUDE_GL3
 #include <GLFW/glfw3.h>
+#include <OpenGL/gl3.h>
 #include "views/viewController.h"
 
 // debug
@@ -20,6 +22,12 @@ ViewController* viewController;
 int main(int argc,char** argv) {
   if(!glfwInit())
     exit(EXIT_FAILURE);
+  glfwSetErrorCallback(error);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
   GLFWwindow* window = glfwCreateWindow(1000,1000,"Zack Misso - ModernGL",NULL,NULL);
   if (!window) {
     glfwTerminate();
@@ -27,7 +35,6 @@ int main(int argc,char** argv) {
   }
   int width;
   int height;
-  glfwSetErrorCallback(error);
   glfwMakeContextCurrent(window);
   glfwSetKeyCallback(window,keyboard);
   glfwGetFramebufferSize(window, &width, &height);
