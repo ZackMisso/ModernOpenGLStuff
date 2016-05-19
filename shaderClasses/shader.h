@@ -22,8 +22,9 @@ public:
   void reset();
   void release();
   // getter methods
-  GLchar* getSource();
+  GLchar* getSource() const;
   GLuint getShaderObj();
+  GLint getBytes() const;
 };
 
 #endif

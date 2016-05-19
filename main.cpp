@@ -79,5 +79,6 @@ void mouseClick(int button,int state,int x,int y) {
 }
 
 void error(int error, const char* description) {
-    fputs(description, stderr);
+  fputs(description, stderr);
+  cout << "ERROR" << endl;
 }

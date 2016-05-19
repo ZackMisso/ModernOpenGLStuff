@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <cassert>
 
+#include <iostream>
+
 using namespace std;
 
 Shader::Shader(GLenum type,int len,const char* s)
@@ -41,10 +43,15 @@ bool Shader::readFile(const char* filename) {
     assert(bytes==size);
     fclose(file);
     dirty=true;
+    long i=0;
+    while(i!=size)
+      cout << source[i++];
+    cout << endl;
   } else {
     fprintf(stderr,"Could Not Open File\n");
     return false;
   }
+
   return true;
 }
 
@@ -97,7 +104,8 @@ void Shader::release() {
   shaderObj = 0;
 }
 
-GLchar* Shader::getSource() { return source; }
+GLchar* Shader::getSource() const { return source; }
+GLint Shader::getBytes() const { return bytes; }
 
 GLuint Shader::getShaderObj() {
   validate();
