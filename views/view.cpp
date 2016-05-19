@@ -12,7 +12,7 @@ void View::display() { }
 
 void View::reshape(int w,int h) { }
 
-void View::keyboard(unsigned char key,int x,int y) { }
+void View::keyboard(int key,int scancode,int action,int mods) { }
 
 void View::mouseMove(int x,int y) { }
 

@@ -67,7 +67,7 @@ void reshape(int w,int h) {
 void keyboard(GLFWwindow* window,int key,int scancode,int action,int mods) {
   if(key==GLFW_KEY_ESCAPE && action==GLFW_PRESS)
     glfwSetWindowShouldClose(window,GL_TRUE);
-  // to be implemented
+  viewController->getCurrentView()->keyboard(key,scancode,action,mods);
 }
 
 void mouseMove(int x,int y) {
