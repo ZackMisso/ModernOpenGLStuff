@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cassert>
-
+#include <vector>
 #include <iostream>
 
 using namespace std;
 
 Shader::Shader(GLenum type,int len,const char* s)
-      :shaderType(type),bytes(len),shaderObj(0),dirty(true)
+      :shaderType(type),bytes(len),shaderObj(0)
 {
   source = new GLchar[bytes];
   if(source)
@@ -17,11 +17,11 @@ Shader::Shader(GLenum type,int len,const char* s)
 }
 
 Shader::Shader(GLenum type)
-      :shaderType(type),source(NULL),shaderObj(0),dirty(true)
+      :shaderType(type),source(NULL),shaderObj(0)
 { }
 
 Shader::~Shader() {
-  reset();
+  deleteShader();
   delete source;
 }
 
@@ -42,72 +42,94 @@ bool Shader::readFile(const char* filename) {
     bytes = (int)fread(source,1,size,file);
     assert(bytes==size);
     fclose(file);
-    dirty=true;
-    long i=0;
-    while(i!=size)
-      cout << source[i++];
-    cout << endl;
   } else {
     fprintf(stderr,"Could Not Open File\n");
     return false;
   }
-
   return true;
 }
 
-void Shader::validate() {
-  if(dirty||!shaderObj) {
-    if(!shaderObj)
-      shaderObj = glCreateShader(shaderType);
-    if(shaderObj) {
-      const GLchar** s = (const GLchar**)&source;
-      glShaderSource(shaderObj,1,s,&bytes);
-      glCompileShader(shaderObj);
-      dirty = false;
-      GLint compiled = 0;
-      glGetShaderiv(shaderObj,GL_COMPILE_STATUS,&compiled);
-      if(!compiled)
-        showInfo("shader");
-    }
-  }
-}
-
-void Shader::showInfo(const char* msg) {
-  validate();
-  GLint maxLength;
-  GLint length;
-  GLchar* info;
-  glGetShaderiv(shaderObj,GL_INFO_LOG_LENGTH,&maxLength);
-  if(maxLength>1) {
-    info = (GLchar*)malloc(maxLength);
-    if(info) {
-      glGetShaderInfoLog(shaderObj,maxLength,&length,info);
-      printf("///// %s info log contents /////\n",msg);
-      printf("%s",info);
-      printf("///// end /////\n");
-      free(info);
-    }
-  } else {
-    // not an error, good thing
-    printf("///// %s has an empty info log /////\n",msg);
-  }
-}
-
-void Shader::reset() {
+void Shader::deleteShader() {
   if(shaderObj) {
     glDeleteShader(shaderObj);
     shaderObj = 0;
   }
 }
 
-void Shader::release() {
-  shaderObj = 0;
+GLuint Shader::compileShader(Shader* vert,Shader* frag) {
+  // shader ids
+  GLuint vertShader;
+  GLuint fragShader;
+  GLuint program;
+  // create and compile vert shader
+  vertShader = glCreateShader(GL_VERTEX_SHADER);
+  const GLchar* vertSource = vert->getSource();
+  const GLint vertLength = vert->getBytes();
+  glShaderSource(vertShader,1,&vertSource,&vertLength);
+  glCompileShader(vertShader);
+  checkCompileLog(vertShader);
+  //GLint success = 0;
+  //glGetShaderiv(vertShader, GL_COMPILE_STATUS, &success);
+  //if(success == GL_FALSE) {
+  //  cout << "ERROR COMPILING VERTEX SHADER" << endl;
+  //  GLint logSize = 0;
+  //  glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &logSize);
+	//  vector<GLchar> errorLog(logSize);
+	//  glGetShaderInfoLog(vertShader, logSize, &logSize, &errorLog[0]);
+  //  for(int i=0;i<errorLog.size()-1;i++) {
+  //    cout << errorLog[i];
+  //  }
+  //  cout << endl;
+  //}
+  // create and compile frag shader
+  fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+  const GLchar* fragSource = frag->getSource();
+  const GLint fragLength = frag->getBytes();
+  glShaderSource(fragShader,1,&fragSource,&fragLength);
+  glCompileShader(fragShader);
+  checkCompileLog(fragShader);
+  //success = 0;
+  //glGetShaderiv(fragShader, GL_COMPILE_STATUS, &success);
+  //if(success == GL_FALSE) {
+  //  cout << "ERROR COMPILING FRAGMENT SHADER" << endl;
+  //  GLint logSize = 0;
+  //  glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logSize);
+	//  vector<GLchar> errorLog(logSize);
+	//  glGetShaderInfoLog(fragShader, logSize, &logSize, &errorLog[0]);
+  //  for(int i=0;i<errorLog.size()-1;i++) {
+  //    cout << errorLog[i];
+  //  }
+  //  cout << endl;
+  //}
+  // create program, attach it, and link
+  program = glCreateProgram();
+  glAttachShader(program,vertShader);
+  glAttachShader(program,fragShader);
+  glLinkProgram(program);
+  // update the shaders
+  vert->setShaderObj(vertShader);
+  frag->setShaderObj(fragShader);
+  return program;
 }
 
+void Shader::checkCompileLog(const GLuint shader) {
+  GLint success = 0;
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+  if(success == GL_FALSE) {
+    cout << "ERROR COMPILING SHADER" << endl;
+    GLint logSize = 0;
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logSize);
+	  vector<GLchar> errorLog(logSize);
+	  glGetShaderInfoLog(shader, logSize, &logSize, &errorLog[0]);
+    for(int i=0;i<errorLog.size()-1;i++) {
+      cout << errorLog[i];
+    }
+    cout << endl;
+  }
+}
+
+GLuint Shader::getShaderObj() const { return shaderObj; }
 GLchar* Shader::getSource() const { return source; }
 GLint Shader::getBytes() const { return bytes; }
 
-GLuint Shader::getShaderObj() {
-  validate();
-  return shaderObj;
-}
+void Shader::setShaderObj(int param) { shaderObj = param; }

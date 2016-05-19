@@ -11,7 +11,6 @@ private:
 public:
   View();
   virtual ~View();
-  GLuint compileShader(const Shader* vert,const Shader* frag);
   virtual void display();
   virtual void reshape(int w,int h);
   virtual void keyboard(unsigned char key,int x,int y);

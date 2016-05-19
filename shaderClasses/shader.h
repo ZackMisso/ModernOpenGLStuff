@@ -11,20 +11,21 @@ private:
   GLint bytes;
   GLchar* source;
   GLuint shaderObj;
-  bool dirty;
 public:
   Shader(GLenum type,int len,const char* s);
   Shader(GLenum type);
   ~Shader();
   bool readFile(const char* file);
-  void validate();
-  void showInfo(const char* msg);
-  void reset();
-  void release();
+  void deleteShader();
+  // static functions
+  static GLuint compileShader(Shader* vert,Shader* frag);
+  static void checkCompileLog(const GLuint shader);
   // getter methods
+  GLuint getShaderObj() const;
   GLchar* getSource() const;
-  GLuint getShaderObj();
   GLint getBytes() const;
+  // setter methods
+  void setShaderObj(GLint param);
 };
 
 #endif

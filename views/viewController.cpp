@@ -16,10 +16,8 @@ ViewController::~ViewController() {
 }
 
 void ViewController::initialize() {
-  cout << "Initializing View Controller" << endl;
   if(!instance)
     instance = new ViewController();
-  cout << "View Controller Initialized" << endl;
 }
 
 void ViewController::destroy() {
