@@ -1,5 +1,4 @@
-#ifndef __FRAGSHADER_H__
-#define __FRAGSHADER_H__
+#pragma once
 
 #include "shader.h"
 
@@ -10,5 +9,3 @@ public:
   FragShader();
   ~FragShader();
 };
-
-#endif

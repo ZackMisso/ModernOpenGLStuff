@@ -39,7 +39,7 @@ int main(int argc,char** argv) {
   glfwSetKeyCallback(window,keyboard);
   glfwGetFramebufferSize(window, &width, &height);
   glViewport(0,0,width,height);
-  glfwSwapInterval(1);
+  glfwSwapInterval(0);
 
 	ViewController::initialize();
   viewController = ViewController::getInstance();

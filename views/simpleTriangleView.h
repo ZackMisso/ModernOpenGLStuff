@@ -5,12 +5,16 @@
 #include "view.h"
 #include "../shaderClasses/fragShader.h"
 #include "../shaderClasses/vertShader.h"
+#include "../shaderClasses/tessCShader.h"
+#include "../shaderClasses/tessEShader.h"
 #include <ctime>
 
 class SimpleTriangleView : public View {
 private:
 	FragShader* simpleFrag;
 	VertShader* simpleVert;
+	TessCShader* simpleTessC;
+	TessEShader* simpleTessE;
 	GLfloat clearColor[4];
 	GLuint simpleProgram;
 	GLuint vao;

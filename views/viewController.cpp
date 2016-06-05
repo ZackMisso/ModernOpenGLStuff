@@ -1,5 +1,6 @@
 #include "viewController.h"
 #include "firstView.h"
+#include "simpleTriangleView.h"
 #include <iostream>
 
 using namespace std;
@@ -7,7 +8,8 @@ using namespace std;
 ViewController* ViewController::instance = 0x0;
 
 ViewController::ViewController() {
-  currentView = new FirstView();
+  //currentView = new FirstView();
+  currentView = new SimpleTriangleView();
   currentView->initialize();
 }
 

@@ -19,6 +19,9 @@ public:
   void deleteShader();
   // static functions
   static GLuint compileShader(Shader* vert,Shader* frag);
+  static GLuint compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tessE);
+  static GLuint compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tessE,Shader* geom);
+  static GLuint compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tessE,Shader* geom,Shader* comp);
   static void checkCompileLog(const GLuint shader);
   // getter methods
   GLuint getShaderObj() const;

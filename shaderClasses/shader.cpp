@@ -68,19 +68,6 @@ GLuint Shader::compileShader(Shader* vert,Shader* frag) {
   glShaderSource(vertShader,1,&vertSource,&vertLength);
   glCompileShader(vertShader);
   checkCompileLog(vertShader);
-  //GLint success = 0;
-  //glGetShaderiv(vertShader, GL_COMPILE_STATUS, &success);
-  //if(success == GL_FALSE) {
-  //  cout << "ERROR COMPILING VERTEX SHADER" << endl;
-  //  GLint logSize = 0;
-  //  glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &logSize);
-	//  vector<GLchar> errorLog(logSize);
-	//  glGetShaderInfoLog(vertShader, logSize, &logSize, &errorLog[0]);
-  //  for(int i=0;i<errorLog.size()-1;i++) {
-  //    cout << errorLog[i];
-  //  }
-  //  cout << endl;
-  //}
   // create and compile frag shader
   fragShader = glCreateShader(GL_FRAGMENT_SHADER);
   const GLchar* fragSource = frag->getSource();
@@ -88,19 +75,6 @@ GLuint Shader::compileShader(Shader* vert,Shader* frag) {
   glShaderSource(fragShader,1,&fragSource,&fragLength);
   glCompileShader(fragShader);
   checkCompileLog(fragShader);
-  //success = 0;
-  //glGetShaderiv(fragShader, GL_COMPILE_STATUS, &success);
-  //if(success == GL_FALSE) {
-  //  cout << "ERROR COMPILING FRAGMENT SHADER" << endl;
-  //  GLint logSize = 0;
-  //  glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logSize);
-	//  vector<GLchar> errorLog(logSize);
-	//  glGetShaderInfoLog(fragShader, logSize, &logSize, &errorLog[0]);
-  //  for(int i=0;i<errorLog.size()-1;i++) {
-  //    cout << errorLog[i];
-  //  }
-  //  cout << endl;
-  //}
   // create program, attach it, and link
   program = glCreateProgram();
   glAttachShader(program,vertShader);
@@ -109,6 +83,185 @@ GLuint Shader::compileShader(Shader* vert,Shader* frag) {
   // update the shaders
   vert->setShaderObj(vertShader);
   frag->setShaderObj(fragShader);
+  return program;
+}
+
+GLuint Shader::compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tessE) {
+  // shader ids
+  GLuint vertShader;
+  GLuint fragShader;
+  GLuint tessCShader;
+  GLuint tessEShader;
+  GLuint program;
+  // create and compile vert shader
+  vertShader = glCreateShader(GL_VERTEX_SHADER);
+  const GLchar* vertSource = vert->getSource();
+  const GLint vertLength = vert->getBytes();
+  glShaderSource(vertShader,1,&vertSource,&vertLength);
+  glCompileShader(vertShader);
+  checkCompileLog(vertShader);
+  // create and compile frag shader
+  fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+  const GLchar* fragSource = frag->getSource();
+  const GLint fragLength = frag->getBytes();
+  glShaderSource(fragShader,1,&fragSource,&fragLength);
+  glCompileShader(fragShader);
+  checkCompileLog(fragShader);
+  // create and compile tessC shader
+  cout << "Tess C" << endl;
+  tessCShader = glCreateShader(GL_TESS_CONTROL_SHADER);
+  const GLchar* tessCSource = tessC->getSource();
+  const GLint tessCLength = tessC->getBytes();
+  glShaderSource(tessCShader,1,&tessCSource,&tessCLength);
+  glCompileShader(tessCShader);
+  checkCompileLog(tessCShader);
+  // create and compile tessE shader
+  cout << "Tess E" << endl;
+  tessEShader = glCreateShader(GL_TESS_EVALUATION_SHADER);
+  const GLchar* tessESource = tessE->getSource();
+  const GLint tessELength = tessE->getBytes();
+  glShaderSource(tessEShader,1,&tessESource,&tessELength);
+  glCompileShader(tessEShader);
+  checkCompileLog(tessEShader);
+  // create program, attach it, and link
+  program = glCreateProgram();
+  glAttachShader(program,vertShader);
+  glAttachShader(program,fragShader);
+  glAttachShader(program,tessCShader);
+  glAttachShader(program,tessEShader);
+  glLinkProgram(program);
+  // update the shaders
+  vert->setShaderObj(vertShader);
+  frag->setShaderObj(fragShader);
+  tessC->setShaderObj(tessCShader);
+  tessE->setShaderObj(tessEShader);
+  return program;
+}
+
+GLuint Shader::compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tessE,Shader* geom) {
+  // shader ids
+  GLuint vertShader;
+  GLuint fragShader;
+  GLuint tessCShader;
+  GLuint tessEShader;
+  GLuint geomShader;
+  GLuint program;
+  // create and compile vert shader
+  vertShader = glCreateShader(GL_VERTEX_SHADER);
+  const GLchar* vertSource = vert->getSource();
+  const GLint vertLength = vert->getBytes();
+  glShaderSource(vertShader,1,&vertSource,&vertLength);
+  glCompileShader(vertShader);
+  checkCompileLog(vertShader);
+  // create and compile frag shader
+  fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+  const GLchar* fragSource = frag->getSource();
+  const GLint fragLength = frag->getBytes();
+  glShaderSource(fragShader,1,&fragSource,&fragLength);
+  glCompileShader(fragShader);
+  checkCompileLog(fragShader);
+  // create and compile tessC shader
+  tessCShader = glCreateShader(GL_TESS_CONTROL_SHADER);
+  const GLchar* tessCSource = tessC->getSource();
+  const GLint tessCLength = tessC->getBytes();
+  glShaderSource(tessCShader,1,&tessCSource,&tessCLength);
+  glCompileShader(tessCShader);
+  checkCompileLog(tessCShader);
+  // create and compile tessE shader
+  tessEShader = glCreateShader(GL_TESS_EVALUATION_SHADER);
+  const GLchar* tessESource = tessE->getSource();
+  const GLint tessELength = tessE->getBytes();
+  glShaderSource(tessEShader,1,&tessESource,&tessELength);
+  glCompileShader(tessEShader);
+  checkCompileLog(tessEShader);
+  // create and compile geom shader
+  geomShader = glCreateShader(GL_GEOMETRY_SHADER);
+  const GLchar* geomSource = geom->getSource();
+  const GLint geomLength = geom->getBytes();
+  glShaderSource(geomShader,1,&geomSource,&geomLength);
+  glCompileShader(geomShader);
+  checkCompileLog(geomShader);
+  // create program, attach it, and link
+  program = glCreateProgram();
+  glAttachShader(program,vertShader);
+  glAttachShader(program,fragShader);
+  glAttachShader(program,tessCShader);
+  glAttachShader(program,tessEShader);
+  glAttachShader(program,geomShader);
+  glLinkProgram(program);
+  // update the shaders
+  vert->setShaderObj(vertShader);
+  frag->setShaderObj(fragShader);
+  tessC->setShaderObj(tessCShader);
+  tessE->setShaderObj(tessEShader);
+  return program;
+}
+
+GLuint Shader::compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tessE,Shader* geom,Shader* comp) {
+  // shader ids
+  GLuint vertShader;
+  GLuint fragShader;
+  GLuint tessCShader;
+  GLuint tessEShader;
+  GLuint geomShader;
+  GLuint compShader;
+  GLuint program;
+  // create and compile vert shader
+  vertShader = glCreateShader(GL_VERTEX_SHADER);
+  const GLchar* vertSource = vert->getSource();
+  const GLint vertLength = vert->getBytes();
+  glShaderSource(vertShader,1,&vertSource,&vertLength);
+  glCompileShader(vertShader);
+  checkCompileLog(vertShader);
+  // create and compile frag shader
+  fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+  const GLchar* fragSource = frag->getSource();
+  const GLint fragLength = frag->getBytes();
+  glShaderSource(fragShader,1,&fragSource,&fragLength);
+  glCompileShader(fragShader);
+  checkCompileLog(fragShader);
+  // create and compile tessC shader
+  tessCShader = glCreateShader(GL_TESS_CONTROL_SHADER);
+  const GLchar* tessCSource = tessC->getSource();
+  const GLint tessCLength = tessC->getBytes();
+  glShaderSource(tessCShader,1,&tessCSource,&tessCLength);
+  glCompileShader(tessCShader);
+  checkCompileLog(tessCShader);
+  // create and compile tessE shader
+  tessEShader = glCreateShader(GL_TESS_EVALUATION_SHADER);
+  const GLchar* tessESource = tessE->getSource();
+  const GLint tessELength = tessE->getBytes();
+  glShaderSource(tessEShader,1,&tessESource,&tessELength);
+  glCompileShader(tessEShader);
+  checkCompileLog(tessEShader);
+  // create and compile geom shader
+  geomShader = glCreateShader(GL_GEOMETRY_SHADER);
+  const GLchar* geomSource = geom->getSource();
+  const GLint geomLength = geom->getBytes();
+  glShaderSource(geomShader,1,&geomSource,&geomLength);
+  glCompileShader(geomShader);
+  checkCompileLog(geomShader);
+  // create and compile comp shader
+  compShader = glCreateShader(GL_GEOMETRY_SHADER);
+  const GLchar* compSource = comp->getSource();
+  const GLint compLength = comp->getBytes();
+  glShaderSource(compShader,1,&compSource,&compLength);
+  glCompileShader(compShader);
+  checkCompileLog(compShader);
+  // create program, attach it, and link
+  program = glCreateProgram();
+  glAttachShader(program,vertShader);
+  glAttachShader(program,fragShader);
+  glAttachShader(program,tessCShader);
+  glAttachShader(program,tessEShader);
+  glAttachShader(program,geomShader);
+  glAttachShader(program,compShader);
+  glLinkProgram(program);
+  // update the shaders
+  vert->setShaderObj(vertShader);
+  frag->setShaderObj(fragShader);
+  tessC->setShaderObj(tessCShader);
+  tessE->setShaderObj(tessEShader);
   return program;
 }
 
