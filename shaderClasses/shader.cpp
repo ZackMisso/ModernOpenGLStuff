@@ -108,6 +108,7 @@ GLuint Shader::compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tes
   glCompileShader(fragShader);
   checkCompileLog(fragShader);
   // create and compile tessC shader
+  if(glGetError() != GL_NO_ERROR) cout << "ERROR BEFORE TESS C" << endl;
   cout << "Tess C" << endl;
   tessCShader = glCreateShader(GL_TESS_CONTROL_SHADER);
   const GLchar* tessCSource = tessC->getSource();
@@ -116,6 +117,7 @@ GLuint Shader::compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tes
   glCompileShader(tessCShader);
   checkCompileLog(tessCShader);
   // create and compile tessE shader
+  if(glGetError() != GL_NO_ERROR) cout << "ERROR BEFORE TESS E" << endl;
   cout << "Tess E" << endl;
   tessEShader = glCreateShader(GL_TESS_EVALUATION_SHADER);
   const GLchar* tessESource = tessE->getSource();
@@ -124,12 +126,29 @@ GLuint Shader::compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tes
   glCompileShader(tessEShader);
   checkCompileLog(tessEShader);
   // create program, attach it, and link
+  if(glGetError() != GL_NO_ERROR) cout << "ERROR BEFORE LINK" << endl;
   program = glCreateProgram();
   glAttachShader(program,vertShader);
-  glAttachShader(program,fragShader);
   glAttachShader(program,tessCShader);
   glAttachShader(program,tessEShader);
+  glAttachShader(program,fragShader);
   glLinkProgram(program);
+  GLint IsLinked;
+	glGetProgramiv(program, GL_LINK_STATUS, (GLint *)&IsLinked);
+	if(IsLinked==false)
+	{
+    cout << "NOT LIKNKED" << endl;
+    GLint maxLength;
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+		if(maxLength>0)
+		{
+			char *pLinkInfoLog = new char[maxLength];
+			glGetProgramInfoLog(program, maxLength, &maxLength, pLinkInfoLog);
+			cout << pLinkInfoLog << endl;
+			delete [] pLinkInfoLog;
+		}
+  }
+  if(glGetError() != GL_NO_ERROR) cout << "ERROR AFTER LINK" << endl;
   // update the shaders
   vert->setShaderObj(vertShader);
   frag->setShaderObj(fragShader);
@@ -251,9 +270,9 @@ GLuint Shader::compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tes
   // create program, attach it, and link
   program = glCreateProgram();
   glAttachShader(program,vertShader);
-  glAttachShader(program,fragShader);
   glAttachShader(program,tessCShader);
   glAttachShader(program,tessEShader);
+  glAttachShader(program,fragShader);
   glAttachShader(program,geomShader);
   glAttachShader(program,compShader);
   glLinkProgram(program);

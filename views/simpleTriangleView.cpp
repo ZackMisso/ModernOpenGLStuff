@@ -1,5 +1,8 @@
 #include "simpleTriangleView.h"
 #include <tgmath.h>
+#include <iostream>
+
+using namespace std;
 
 SimpleTriangleView::SimpleTriangleView() {
 	clearColor[0] = 0.0f;
@@ -9,10 +12,12 @@ SimpleTriangleView::SimpleTriangleView() {
 }
 
 void SimpleTriangleView::display() {
+	glGetError();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearBufferfv(GL_COLOR,0,clearColor);
 	double dt = (clock()-start)/(double)CLOCKS_PER_SEC*10;
 	glUseProgram(simpleProgram);
+	GLenum error = glGetError();
 	GLfloat attrib[] = { (float)sin(dt) * 0.5f,
 											 (float)cos(dt) * 0.6f,
 											 0.0f, 0.0f };
@@ -22,7 +27,25 @@ void SimpleTriangleView::display() {
 	glVertexAttrib4fv(0,attrib);
 	glVertexAttrib4fv(1,color);
 	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-	glDrawArrays(GL_TRIANGLES,0,3);
+	glPatchParameteri(GL_PATCH_VERTICES,3);
+	glDrawArrays(GL_PATCHES,0,3);
+
+	error = glGetError();
+	if(error != GL_NO_ERROR && false) {
+		cout << "THERE WAS AN ERROR" << endl;
+		if(error == GL_INVALID_ENUM) {
+			cout << "INVALID ENUM" << endl;
+		}
+		if(error == GL_INVALID_VALUE) {
+			cout << "INVALID VALUE" << endl;
+		}
+		if(error == GL_INVALID_OPERATION) {
+			cout << "INVALID OPERATION" << endl;
+		}
+		if(error == GL_STACK_OVERFLOW) {
+			cout << "STACK OVERFLOW" << endl;
+		}
+	}
 }
 
 void SimpleTriangleView::keyboard(int key,int scancode,int action,int mods) {
@@ -36,13 +59,17 @@ void SimpleTriangleView::initialize() {
 	simpleTessC = new TessCShader();
 	simpleTessE = new TessEShader();
 	// read in the shader files
+	//simpleFrag->readFile("fragShaders/test.frag");
+	//simpleVert->readFile("vertShaders/test.vert");
+	//simpleTessC->readFile("tessControlShaders/test.tessc");
+	//simpleTessE->readFile("tessEvaluationShaders/test.tesse");
 	simpleFrag->readFile("fragShaders/simpleTriangle.frag");
 	simpleVert->readFile("vertShaders/simpleTriangle.vert");
 	simpleTessC->readFile("tessControlShaders/simpleTriangle.tessc");
 	simpleTessE->readFile("tessEvaluationShaders/simpleTriangle.tesse");
 	// compile shaders
-	simpleProgram = Shader::compileShader(simpleVert,simpleFrag);
-	//simpleProgram = Shader::compileShader(simpleVert,simpleFrag,simpleTessC,simpleTessE);
+	//simpleProgram = Shader::compileShader(simpleVert,simpleFrag);
+	simpleProgram = Shader::compileShader(simpleVert,simpleFrag,simpleTessC,simpleTessE);
 	// create and link empty vao
 	glGenVertexArrays(1,&vao);
 	glBindVertexArray(vao);
