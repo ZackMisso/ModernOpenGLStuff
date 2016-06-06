@@ -59,10 +59,6 @@ void SimpleTriangleView::initialize() {
 	simpleTessC = new TessCShader();
 	simpleTessE = new TessEShader();
 	// read in the shader files
-	//simpleFrag->readFile("fragShaders/test.frag");
-	//simpleVert->readFile("vertShaders/test.vert");
-	//simpleTessC->readFile("tessControlShaders/test.tessc");
-	//simpleTessE->readFile("tessEvaluationShaders/test.tesse");
 	simpleFrag->readFile("fragShaders/simpleTriangle.frag");
 	simpleVert->readFile("vertShaders/simpleTriangle.vert");
 	simpleTessC->readFile("tessControlShaders/simpleTriangle.tessc");
