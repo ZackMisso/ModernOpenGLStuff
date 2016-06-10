@@ -1,14 +1,9 @@
 #version 410 core
 
-//in VS_OUT
-//{
-//  vec4 color;
-//} fs_in;
-
-in vec4 tes_color;
+in vec4 geom_color;
 
 out vec4 color;
 
 void main(void) {
-  color = tes_color;
+  color = geom_color;
 }

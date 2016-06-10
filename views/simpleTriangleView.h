@@ -7,6 +7,7 @@
 #include "../shaderClasses/vertShader.h"
 #include "../shaderClasses/tessCShader.h"
 #include "../shaderClasses/tessEShader.h"
+#include "../shaderClasses/geomShader.h"
 #include <ctime>
 
 class SimpleTriangleView : public View {
@@ -15,6 +16,7 @@ private:
 	VertShader* simpleVert;
 	TessCShader* simpleTessC;
 	TessEShader* simpleTessE;
+	GeomShader* simpleGeom;
 	GLfloat clearColor[4];
 	GLuint simpleProgram;
 	GLuint vao;

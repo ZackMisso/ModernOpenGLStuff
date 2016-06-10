@@ -328,12 +328,19 @@ GLuint Shader::compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tes
   // create program, attach it, and link
   program = glCreateProgram();
   glAttachShader(program,vertShader);
+  GLenum error = glGetError();
+  if(error == GL_INVALID_OPERATION) checkCompileLog(vertShader);
   glAttachShader(program,tessCShader);
   glAttachShader(program,tessEShader);
   glAttachShader(program,fragShader);
   glAttachShader(program,geomShader);
   glAttachShader(program,compShader);
   glLinkProgram(program);
+  //GLint maxLength = 0;
+	//glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+	//The maxLength includes the NULL character
+	//std::vector<GLchar> infoLog(maxLength);
+	//glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
   // update the shaders
   vert->setShaderObj(vertShader);
   frag->setShaderObj(fragShader);
@@ -364,6 +371,10 @@ void Shader::checkCompileLog(const GLuint shader) {
     }
     cout << endl;
   }
+}
+
+void Shader::checkForError() {
+  // blah
 }
 
 GLuint Shader::getShaderObj() const { return shaderObj; }

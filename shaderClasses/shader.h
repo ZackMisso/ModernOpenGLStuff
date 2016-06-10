@@ -24,6 +24,7 @@ public:
   static GLuint compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tessE,Shader* geom);
   static GLuint compileShader(Shader* vert,Shader* frag,Shader* tessC,Shader* tessE,Shader* geom,Shader* comp);
   static void checkCompileLog(const GLuint shader);
+  static void checkForError();
   // getter methods
   GLuint getShaderObj() const;
   GLchar* getSource() const;

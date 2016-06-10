@@ -3,11 +3,6 @@
 layout (location = 0) in vec4 offset;
 layout (location = 1) in vec4 color;
 
-//out VS_OUT
-//{
-//  vec4 color;
-//} vs_out;
-
 out vec4 vs_color;
 
 void main(void) {

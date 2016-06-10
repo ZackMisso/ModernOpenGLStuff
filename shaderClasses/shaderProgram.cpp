@@ -1,4 +1,8 @@
 #include "shaderProgram.h"
+#include <iostream>
+#include <vector>
+
+using namespace std;
 
 ShaderProgram::ShaderProgram() {
   vert = 0x0;
@@ -152,6 +156,22 @@ void ShaderProgram::deleteProgram() {
 
 void ShaderProgram::programOwnsShaders(bool param) {
   ownsShaders = param;
+}
+
+void ShaderProgram::checkCompileLog(const GLuint shader) {
+  GLint success = 0;
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+  if(success == GL_FALSE) {
+    cout << "ERROR COMPILING SHADER" << endl;
+    GLint logSize = 0;
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logSize);
+	  vector<GLchar> errorLog(logSize);
+	  glGetShaderInfoLog(shader, logSize, &logSize, &errorLog[0]);
+    for(int i=0;i<errorLog.size()-1;i++) {
+      cout << errorLog[i];
+    }
+    cout << endl;
+  }
 }
 
 VertShader* ShaderProgram::getVert() { return vert; }

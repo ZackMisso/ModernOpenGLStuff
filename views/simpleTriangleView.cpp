@@ -24,6 +24,7 @@ void SimpleTriangleView::display() {
 	const GLfloat color[] = { (float)sin(dt) * 0.5f + 0.5f,
 											 (float)cos(dt) * 0.5f + 0.5f,
 										 	 0.0f, 1.0f };
+	glPointSize(5.0);
 	glVertexAttrib4fv(0,attrib);
 	glVertexAttrib4fv(1,color);
 	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
@@ -31,7 +32,7 @@ void SimpleTriangleView::display() {
 	glDrawArrays(GL_PATCHES,0,3);
 
 	error = glGetError();
-	if(error != GL_NO_ERROR && false) {
+	if(error != GL_NO_ERROR) {
 		cout << "THERE WAS AN ERROR" << endl;
 		if(error == GL_INVALID_ENUM) {
 			cout << "INVALID ENUM" << endl;
@@ -58,14 +59,17 @@ void SimpleTriangleView::initialize() {
 	simpleVert = new VertShader();
 	simpleTessC = new TessCShader();
 	simpleTessE = new TessEShader();
+	simpleGeom = new GeomShader();
 	// read in the shader files
 	simpleFrag->readFile("fragShaders/simpleTriangle.frag");
 	simpleVert->readFile("vertShaders/simpleTriangle.vert");
 	simpleTessC->readFile("tessControlShaders/simpleTriangle.tessc");
 	simpleTessE->readFile("tessEvaluationShaders/simpleTriangle.tesse");
+	simpleGeom->readFile("geomShaders/simpleTriangle.geom");
 	// compile shaders
 	//simpleProgram = Shader::compileShader(simpleVert,simpleFrag);
-	simpleProgram = Shader::compileShader(simpleVert,simpleFrag,simpleTessC,simpleTessE);
+	//simpleProgram = Shader::compileShader(simpleVert,simpleFrag,simpleTessC,simpleTessE);
+	simpleProgram = Shader::compileShader(simpleVert,simpleFrag,simpleTessC,simpleTessE,simpleGeom);
 	// create and link empty vao
 	glGenVertexArrays(1,&vao);
 	glBindVertexArray(vao);

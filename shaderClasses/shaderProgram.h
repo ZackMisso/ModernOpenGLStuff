@@ -21,9 +21,10 @@ public:
   ShaderProgram();
   ~ShaderProgram();
   void compileAndLink();
-  void deleteShaders();
-  void detachProgram();
+  void detachShaders();
+  void deleteProgram();
   void programOwnsShaders(bool param);
+  void checkCompileLog(const GLuint shader);
   // getter methods
   VertShader* getVert();
   FragShader* getFrag();

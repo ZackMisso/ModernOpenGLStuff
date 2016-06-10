@@ -2,16 +2,6 @@
 
 layout (triangles, equal_spacing, cw) in;
 
-//in TC_OUT
-//{
-//  vec4 color;
-//} tc_out;
-
-//out TE_OUT
-//{
-//  vec4 color;
-//} te_out;
-
 patch in  vec4 patch_color;
 out vec4 tes_color;
 
